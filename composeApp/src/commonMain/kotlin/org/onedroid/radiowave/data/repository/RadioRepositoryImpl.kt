@@ -17,11 +17,11 @@ class RadioRepositoryImpl(
 ) : RadioRepository {
 
     private val localStations = listOf(
-        Radio(id="1", name="Sunset FM", streamUrl="http://152.53.82.216:8080/listen/sunset.fm/radio.mp3", imageUrl="https://radio.sunset-media.org/Sunsetfm.png", country="Russia", language="russian", tags="sunset", votes=100, clickCount=100),
-        Radio(id="2", name="Radio .Sueta", streamUrl="https://kino-stream.online/hls/sueta-radio.m3u8", imageUrl="https://kino-stream.online/sueta.png", country="Russia", language="russian", tags="sueta", votes=90, clickCount=90),
-        Radio(id="3", name="Диско-радио SOVA", streamUrl="https://evcast.mediacp.eu:1965/stream", imageUrl="https://radio.sunset-media.org/SOVARadio.png", country="Russia", language="russian", tags="disco", votes=80, clickCount=80),
-        Radio(id="4", name="Советская эстрада", streamUrl="https://evcast.mediacp.eu:2075/stream", imageUrl="https://radio.sunset-media.org/Sovestr.jpg", country="Russia", language="russian", tags="soviet", votes=80, clickCount=80),
-        Radio(id="5", name="Limit FM", streamUrl="http://zvukradio.com/live-app/8889", imageUrl="https://radio.sunset-media.org/limit.jpg", country="Russia", language="russian", tags="hits", votes=70, clickCount=70)
+        Radio(id="1", name="Sunset FM", url="http://152.53.82.216:8080/listen/sunset.fm/radio.mp3", urlResolved="http://152.53.82.216:8080/listen/sunset.fm/radio.mp3", imgUrl="https://radio.sunset-media.org/Sunsetfm.png", country="Russia", language=listOf("russian"), tags=listOf("sunset"), voteCount=100, clickCount=100),
+        Radio(id="2", name="Radio .Sueta", url="https://kino-stream.online/hls/sueta-radio.m3u8", urlResolved="https://kino-stream.online/hls/sueta-radio.m3u8", imgUrl="https://kino-stream.online/sueta.png", country="Russia", language=listOf("russian"), tags=listOf("sueta"), voteCount=90, clickCount=90),
+        Radio(id="3", name="Диско-радио SOVA", url="https://evcast.mediacp.eu:1965/stream", urlResolved="https://evcast.mediacp.eu:1965/stream", imgUrl="https://radio.sunset-media.org/SOVARadio.png", country="Russia", language=listOf("russian"), tags=listOf("disco"), voteCount=80, clickCount=80),
+        Radio(id="4", name="Советская эстрада", url="https://evcast.mediacp.eu:2075/stream", urlResolved="https://evcast.mediacp.eu:2075/stream", imgUrl="https://radio.sunset-media.org/Sovestr.jpg", country="Russia", language=listOf("russian"), tags=listOf("soviet"), voteCount=80, clickCount=80),
+        Radio(id="5", name="Limit FM", url="http://zvukradio.com/live-app/8889", urlResolved="http://zvukradio.com/live-app/8889", imgUrl="https://radio.sunset-media.org/limit.jpg", country="Russia", language=listOf("russian"), tags=listOf("hits"), voteCount=70, clickCount=70)
     )
 
     override suspend fun searchRadios(query: String): Result<List<Radio>, DataError.Remote> {
