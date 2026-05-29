@@ -17,7 +17,7 @@ import org.onedroid.radiowave.data.mappers.toRadio
 import org.onedroid.radiowave.data.mappers.toRadioEntity
 import org.onedroid.radiowave.domain.Radio
 import org.onedroid.radiowave.domain.RadioRepository
-import sunsetradio.composeapp.generated.resources.Res
+import radiowave.composeapp.generated.resources.Res
 
 class RadioRepositoryImpl(
     private val radioWaveDao: RadioWaveDao
