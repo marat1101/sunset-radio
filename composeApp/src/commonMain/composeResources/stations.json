@@ -1,0 +1,62 @@
+[
+  {
+    "stationuuid": "sunset-fm-001",
+    "name": "Sunset FM",
+    "url": "http://152.53.82.216:8080/listen/sunset.fm/radio.mp3",
+    "url_resolved": "http://152.53.82.216:8080/listen/sunset.fm/radio.mp3",
+    "favicon": "https://radio.sunset-media.org/Sunsetfm.png",
+    "tags": "sunset,pop",
+    "country": "Russia",
+    "language": "russian",
+    "votes": 100,
+    "clickcount": 100
+  },
+  {
+    "stationuuid": "sueta-radio-002",
+    "name": "Radio .Sueta",
+    "url": "https://kino-stream.online/hls/sueta-radio.m3u8",
+    "url_resolved": "https://kino-stream.online/hls/sueta-radio.m3u8",
+    "favicon": "https://kino-stream.online/sueta.png",
+    "tags": "sueta",
+    "country": "Russia",
+    "language": "russian",
+    "votes": 90,
+    "clickcount": 90
+  },
+  {
+    "stationuuid": "sova-disco-003",
+    "name": "Диско-радио SOVA",
+    "url": "https://evcast.mediacp.eu:1965/stream",
+    "url_resolved": "https://evcast.mediacp.eu:1965/stream",
+    "favicon": "https://radio.sunset-media.org/SOVARadio.png",
+    "tags": "disco,retro",
+    "country": "Russia",
+    "language": "russian",
+    "votes": 80,
+    "clickcount": 80
+  },
+  {
+    "stationuuid": "sova-sovet-004",
+    "name": "Советская эстрада",
+    "url": "https://evcast.mediacp.eu:2075/stream",
+    "url_resolved": "https://evcast.mediacp.eu:2075/stream",
+    "favicon": "https://radio.sunset-media.org/Sovestr.jpg",
+    "tags": "soviet,retro",
+    "country": "Russia",
+    "language": "russian",
+    "votes": 80,
+    "clickcount": 80
+  },
+  {
+    "stationuuid": "limit-fm-005",
+    "name": "Limit FM",
+    "url": "http://zvukradio.com/live-app/8889",
+    "url_resolved": "http://zvukradio.com/live-app/8889",
+    "favicon": "https://radio.sunset-media.org/limit.jpg",
+    "tags": "hits",
+    "country": "Russia",
+    "language": "russian",
+    "votes": 70,
+    "clickcount": 70
+  }
+]
