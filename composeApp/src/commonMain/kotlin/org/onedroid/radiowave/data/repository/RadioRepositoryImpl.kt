@@ -3,12 +3,6 @@ package org.onedroid.radiowave.data.repository
 import androidx.sqlite.SQLiteException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.jsonArray
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
-import kotlinx.serialization.json.intOrNull
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.onedroid.radiowave.app.utils.DataError
 import org.onedroid.radiowave.app.utils.EmptyResult
 import org.onedroid.radiowave.app.utils.Result
@@ -17,52 +11,27 @@ import org.onedroid.radiowave.data.mappers.toRadio
 import org.onedroid.radiowave.data.mappers.toRadioEntity
 import org.onedroid.radiowave.domain.Radio
 import org.onedroid.radiowave.domain.RadioRepository
-import radiowave.composeapp.generated.resources.Res
 
 class RadioRepositoryImpl(
     private val radioWaveDao: RadioWaveDao
 ) : RadioRepository {
 
-    private var cachedStations: List<Radio>? = null
-
-    @OptIn(ExperimentalResourceApi::class)
-    private suspend fun loadStations(): List<Radio> {
-        cachedStations?.let { return it }
-        val bytes = Res.readBytes("files/stations.json")
-        val jsonString = bytes.decodeToString()
-        val jsonArray = Json.parseToJsonElement(jsonString).jsonArray
-        val stations = jsonArray.map { element ->
-            val obj = element.jsonObject
-            Radio(
-                id = obj["stationuuid"]?.jsonPrimitive?.content ?: "",
-                name = obj["name"]?.jsonPrimitive?.content ?: "",
-                streamUrl = obj["url"]?.jsonPrimitive?.content ?: "",
-                imageUrl = obj["favicon"]?.jsonPrimitive?.content ?: "",
-                country = obj["country"]?.jsonPrimitive?.content ?: "",
-                language = obj["language"]?.jsonPrimitive?.content ?: "",
-                tags = obj["tags"]?.jsonPrimitive?.content ?: "",
-                votes = obj["votes"]?.jsonPrimitive?.intOrNull ?: 0,
-                clickCount = obj["clickcount"]?.jsonPrimitive?.intOrNull ?: 0,
-            )
-        }
-        cachedStations = stations
-        return stations
-    }
+    private val localStations = listOf(
+        Radio(id="1", name="Sunset FM", streamUrl="http://152.53.82.216:8080/listen/sunset.fm/radio.mp3", imageUrl="https://radio.sunset-media.org/Sunsetfm.png", country="Russia", language="russian", tags="sunset", votes=100, clickCount=100),
+        Radio(id="2", name="Radio .Sueta", streamUrl="https://kino-stream.online/hls/sueta-radio.m3u8", imageUrl="https://kino-stream.online/sueta.png", country="Russia", language="russian", tags="sueta", votes=90, clickCount=90),
+        Radio(id="3", name="Диско-радио SOVA", streamUrl="https://evcast.mediacp.eu:1965/stream", imageUrl="https://radio.sunset-media.org/SOVARadio.png", country="Russia", language="russian", tags="disco", votes=80, clickCount=80),
+        Radio(id="4", name="Советская эстрада", streamUrl="https://evcast.mediacp.eu:2075/stream", imageUrl="https://radio.sunset-media.org/Sovestr.jpg", country="Russia", language="russian", tags="soviet", votes=80, clickCount=80),
+        Radio(id="5", name="Limit FM", streamUrl="http://zvukradio.com/live-app/8889", imageUrl="https://radio.sunset-media.org/limit.jpg", country="Russia", language="russian", tags="hits", votes=70, clickCount=70)
+    )
 
     override suspend fun searchRadios(query: String): Result<List<Radio>, DataError.Remote> {
-        val all = loadStations()
-        val filtered = if (query.isBlank()) all
-            else all.filter { it.name.contains(query, ignoreCase = true) }
+        val filtered = if (query.isBlank()) localStations
+            else localStations.filter { it.name.contains(query, ignoreCase = true) }
         return Result.Success(filtered)
     }
 
-    override suspend fun getRadios(
-        offset: Int,
-        limit: Int
-    ): Result<List<Radio>, DataError.Remote> {
-        val all = loadStations()
-        val paged = all.drop(offset).take(limit)
-        return Result.Success(paged)
+    override suspend fun getRadios(offset: Int, limit: Int): Result<List<Radio>, DataError.Remote> {
+        return Result.Success(localStations.drop(offset).take(limit))
     }
 
     override suspend fun saveRadio(radio: Radio): EmptyResult<DataError.Local> {
@@ -79,9 +48,7 @@ class RadioRepositoryImpl(
     }
 
     override fun getSavedRadios(): Flow<List<Radio>> {
-        return radioWaveDao.getSavedRadios().map { radioEntities ->
-            radioEntities.sortedByDescending { it.timeStamp }.map { it.toRadio() }
-        }
+        return radioWaveDao.getSavedRadios().map { it.sortedByDescending { e -> e.timeStamp }.map { e -> e.toRadio() } }
     }
 
     override suspend fun isSaved(id: String): Flow<Boolean> {
@@ -98,8 +65,6 @@ class RadioRepositoryImpl(
     }
 
     override fun getRecentlyUpdatedRadios(): Flow<List<Radio>> {
-        return radioWaveDao.getAllRadios().map { radioEntities ->
-            radioEntities.map { it.toRadio() }
-        }
+        return radioWaveDao.getAllRadios().map { it.map { e -> e.toRadio() } }
     }
 }
