@@ -80,11 +80,11 @@ kotlin {
 }
 
 android {
-    namespace = "org.onedroid.radiowave"
+    namespace = "org.sunsetmedia.radio"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "org.onedroid.radiowave"
+        applicationId = "org.sunsetmedia.radio"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
