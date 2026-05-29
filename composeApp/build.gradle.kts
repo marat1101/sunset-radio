@@ -80,7 +80,7 @@ kotlin {
 }
 
 android {
-    namespace = "org.sunsetmedia.radio"
+    namespace = "org.onedroid.radiowave"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
